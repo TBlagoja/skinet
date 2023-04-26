@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import{ HttpClientModule } from '@angular/common/http';
+import{ HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { ShopService } from './shop/shop.service';
 import { HomeModule } from './home/home.module';
+import { ErrorsInterceptor } from './core/interceptors/errors.interceptor';
 
 @NgModule({
   declarations: [
@@ -19,8 +20,11 @@ import { HomeModule } from './home/home.module';
     HttpClientModule,
     CoreModule,
     HomeModule
+  ],  
+  providers: [
+    ShopService,
+    {provide:HTTP_INTERCEPTORS, useClass: ErrorsInterceptor, multi: true}
   ],
-  providers: [ShopService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
