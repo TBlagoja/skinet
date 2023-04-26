@@ -1,4 +1,3 @@
-using API.Errors;
 using API.Exstensions;
 using API.Middleware;
 using Infrastructure;
@@ -24,6 +23,7 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseStaticFiles();
+app.UseCors("CorsPolicy");
 
 app.UseAuthorization();
 

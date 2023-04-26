@@ -26,5 +26,30 @@ namespace Core.Specification
         {
             Includes.Add(include);
         }
+
+        protected void AddOrderBy(Expression<Func<T, object>> orderByExpresion)
+        {
+            OrderBy = orderByExpresion;
+        }
+
+        protected void AddOrderByDescending(Expression<Func<T, object>> orderByDscExpresion)
+        {
+            OrderByDescending = orderByDscExpresion;
+        }
+        protected void ApplyPaging(int skip, int take)
+        {
+            Take = take;
+            Skip = skip;
+            IsPaggingEnabled = true;
+        }
+        public Expression<Func<T, object>> OrderBy { get; private set; }
+
+        public Expression<Func<T, object>> OrderByDescending { get; private set; }
+
+        public int Take { get; private set; }
+
+        public int Skip { get; private set; }
+
+        public bool IsPaggingEnabled { get; private set; }
     }
 }
