@@ -6,9 +6,6 @@
         {
             
         }
-
         public IEnumerable<string>  Errors{ get; set; }
-
-
     }
 }

@@ -4,6 +4,7 @@ using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using API.Errors;
+using StackExchange.Redis;
 
 namespace API.Exstensions
 {
@@ -19,6 +20,12 @@ namespace API.Exstensions
             {
                 opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
             });
+            services.AddSingleton<IConnectionMultiplexer>(c =>
+            {
+                var options = ConfigurationOptions.Parse(configuration.GetConnectionString("Redis"));
+                return ConnectionMultiplexer.Connect(options);
+            });
+            services.AddScoped<IBasketsRepository, BasketsRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
