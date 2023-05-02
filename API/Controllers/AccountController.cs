@@ -67,6 +67,7 @@ namespace API.Controllers
             user.Address = _mapper.Map<AddressDTO, Address>(address);
 
             var result = await _userManager.UpdateAsync(user);
+
             if (result.Succeeded) return _mapper.Map<Address, AddressDTO>(user.Address);
 
             return BadRequest("Problem updating the user");
@@ -93,6 +94,12 @@ namespace API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
         {
+            if (CheckEmailExistsAsync(registerDTO.Email).Result.Value)
+            {
+                return new BadRequestObjectResult(new ApiValidationError 
+                { Errors = new List<string>() {"Email address is in use" } });
+            }
+
             var user = new AppUser()
             {
                 DisplayName = registerDTO.DisplayName,

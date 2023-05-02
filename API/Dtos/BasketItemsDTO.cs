@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Entities
+namespace API.Dtos
 {
-    public class BasketItems
+    public class BasketItemsDTO
     {
         [Required]
         public int Id { get; set; }

@@ -15,8 +15,6 @@ namespace API.Exstensions
             IConfiguration configuration)
         {
 
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
             services.AddDbContext<StoreContext>(opt =>
             {
                 opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
