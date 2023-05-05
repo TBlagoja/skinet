@@ -19,7 +19,9 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private shopService: ShopService,
               private activatedRoute: ActivatedRoute,
               private bcService: BreadcrumbService,
-              private basketService: BasketService) {}
+              private basketService: BasketService) {
+                this.bcService.set('@productDetails', ' ')
+              }
 
   ngOnInit(): void {
     this.loadProduct();
@@ -76,6 +78,6 @@ export class ProductDetailsComponent implements OnInit {
   }
   
   get buttontText(){
-    return this.quantityInBasket === 0 ? 'Add basket': 'Update basket'
+    return this.quantityInBasket === 0 ? 'Add basket': 'Update basket';
   }
 }

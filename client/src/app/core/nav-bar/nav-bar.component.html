@@ -14,14 +14,44 @@
         <li><a routerLink="/test-error" routerLinkActive="active" class="nav-link px-2">Errors</a></li>
       </ul>
       <div class="d-flex align-items-center">
-          <a class="position-relative" routerLink="/basket">
-            <div *ngIf="(basketService.basketSource$ | async) as basket" class="cart-no" style="margin-left: 20px; ">
-              {{getCount(basket.items)}}
-            </div>
-            <i class="fa fa-shopping-cart fa-2x me-5" ></i>
-          </a>
-        <a class="btn btn-outline-light me-2">Login</a>
-        <a class="btn btn-warning me-3">Sign-up</a>
+        <a class="position-relative" routerLink="/basket">
+          <div *ngIf="(basketService.basketSource$ | async) as basket" class="cart-no" style="margin-left: 20px; ">
+            {{getCount(basket.items)}}
+          </div>
+          <i class="fa fa-shopping-cart fa-2x me-5"></i>
+        </a>
+        <ng-container *ngIf="(accountService.currentUser$ | async) == null">
+          <a routerLink="/account/login" class="btn btn-outline-light me-2">Login</a>
+          <a routerLink="/account/register" class="btn btn-warning me-3">Sign-up</a>
+        </ng-container>
+
+        <ng-container *ngIf="accountService.currentUser$ | async as user">
+          <div class="dropdown ms-3 me-5" style="cursor: pointer;" dropdown>
+            <a bsDropdownToggle class="dropdown-toggle">
+              <strong>
+                Welcome {{user.displayName}}
+              </strong>
+            </a>
+            <ul *dropdownMenu class="dropdown-menu dropdown-menu-right">
+              <li class="py-1">
+                <a routerLink="/basket" class="dropdown-item">
+                  <i class="fa fa-shopping-cart me-3"></i> View Baskets
+                </a>
+              </li>
+              <li class="py-1">
+                <a routerLink="/basket" class="dropdown-item">
+                  <i class="fa fa-history me-3"></i> View Orders
+                </a>
+              </li>
+              <div class="dropdown-divider"></div>
+              <li class="py-1">
+                <a (click)="accountService.logOut()" routerLink="/basket" class="dropdown-item">
+                  <i class="fa fa-sign-out me-3"></i> Logout
+                </a>
+              </li>
+            </ul>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>
